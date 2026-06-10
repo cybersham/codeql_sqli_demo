@@ -1,4 +1,6 @@
-import sqlite3,sys
+import sqlite3
+import sys
+from urllib.parse import parse_qs 
 
 def get_username(username):
     connection = sqlite3.connect("users.db")
@@ -8,10 +10,13 @@ def get_username(username):
     return cursor.fetchall()
 
 def main():
-    # Taking input from command line - this is untrusted external input
-    user_input = sys.argv[1]  # ← CodeQL treats this as tainted source
-    results = get_username(user_input)
-    print(results)
+    if len(sys.argv) > 1:
+        fake_url_input = f"user={sys.argv[1]}"
+        parsed = parse_qs(fake_url_input)
+        user_input = parsed['user'][0] 
+        
+        results = get_username(user_input)
+        print(results)
 
 if __name__ == "__main__":
     main()
