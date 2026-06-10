@@ -1,11 +1,20 @@
+from flask import Flask, request
 import sqlite3
-import sys
 
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+app = Flask(__name__)
 
-user_input = sys.argv[1]
+@app.route("/user")
+def user():
+    username = request.args.get("username")
 
-query = "SELECT * FROM users WHERE username = '" + user_input + "'"
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
 
-cursor.execute(query)
+    query = (
+        "SELECT * FROM users WHERE username = '" +
+        username +
+        "'"
+    )
+
+    cursor.execute(query)
+    return "done"
