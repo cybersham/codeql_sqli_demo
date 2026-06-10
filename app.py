@@ -8,7 +8,8 @@ def get_username(username):
     return cursor.fetchall()
 
 def main():
-    user_input = "admin' OR '1'='1"
+    # Taking input from command line - this is untrusted external input
+    user_input = sys.argv[1]  # ← CodeQL treats this as tainted source
     results = get_username(user_input)
     print(results)
 
