@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3,sys
 
 def get_username(username):
     connection = sqlite3.connect("users.db")
