@@ -11,10 +11,8 @@ def user():
     cursor = conn.cursor()
 
     query = (
-        "SELECT * FROM users WHERE username = '" +
-        username +
-        "'"
+        "SELECT * FROM users WHERE username = ? "
     )
 
-    cursor.execute(query)
+    cursor.execute(query, (username,))
     return "done"
